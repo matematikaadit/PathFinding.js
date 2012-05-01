@@ -1,5 +1,5 @@
-$(function() {
-    if (!Modernizr.svg) {
+$(document).ready(function() {
+    if (!Raphael.svg) {
         window.location = './notsupported.html';
     }
 
@@ -8,9 +8,7 @@ $(function() {
         event.preventDefault();
     });
 
-    GridModel.init();
-    GridView.init();
-    GridController.init();
-
+    // initialize visualization
     Panel.init();
+    Controller.init()
 });

@@ -4,12 +4,14 @@
     <meta charset="UTF-8">
     <title>PathFinding.js</title>
 
-    <link rel="stylesheet" href="./main.css" />
+    <link rel="stylesheet" href="./css/style.css" />
     <link rel="stylesheet" href="./lib/themes/jquery.ui.all.css" />
 
     <script type="text/javascript" src="./lib/raphael-min.js"></script>
+    <script type="text/javascript" src="./lib/es5-shim.min.js"></script>
     <script type="text/javascript" src="./lib/jquery-1.7.2.min.js"></script>
-    <script type="text/javascript" src="./lib/modernizr.js"></script>
+    <script type="text/javascript" src="./lib/state-machine.min.js"></script>
+    <script type="text/javascript" src="./lib/async.min.js"></script>
 
     <script type="text/javascript" src="./lib/ui/jquery.ui.core.min.js"></script>
     <script type="text/javascript" src="./lib/ui/jquery.ui.widget.min.js"></script>
@@ -18,20 +20,21 @@
     <script type="text/javascript" src="./lib/ui/jquery.ui.accordion.min.js"></script>
     <script type="text/javascript" src="./lib/ui/jquery.ui.slider.min.js"></script>
 
+
     <script type="text/javascript" src="../lib/pathfinding-browser.js"></script>
-    <script type="text/javascript" src="./notification.js"></script>
-    <script type="text/javascript" src="./grid.js"></script>
-    <script type="text/javascript" src="./panel.js"></script>
-    <script type="text/javascript" src="./main.js"></script>
+
+    <script type="text/javascript" src="./js/view.js"></script>
+    <script type="text/javascript" src="./js/controller.js"></script>
+    <script type="text/javascript" src="./js/panel.js"></script>
+    <script type="text/javascript" src="./js/main.js"></script>
   </head>
   <body>
-    <!-- TODO: info icon and text -->
     <div id="draw_area"></div>
 
-    <div id="help_panel" class="control_panel">
+    <div id="instructions_panel" class="panel">
       <header>
         <h2 class="header_title">Instructions</h2>
-        <span id="hide_instruction">hide</span>
+        <span id="hide_instructions">hide</span>
       </header>
       Click within the <span class="white">white</span> grid and drag your mouse to draw obstacles. <br>
       Drag the <span class="green">green</span> node to set the start position. <br>
@@ -40,10 +43,9 @@
       Click Start Search in the lower-right corner to start the animation.
     </div>
 
-    <div id="algorithm_panel" class="control_panel">
+    <div id="algorithm_panel" class="panel right_panel">
       <header><h2 class="header_title">Select Algorithm</h2></header>
 
-      <!-- TODO: using jquery-ui's triangle image to replace radio button -->
       <div class="accordion">
         <h3 id="astar_header"><a href="#">A*</a></h3>
         <div id="astar_section" class="finder_section">
@@ -135,14 +137,13 @@
             <label class="option_label">Chebyshev</label> <br>
           </div>
         </div>
-      </div>
-    </div>
+      </div><!-- .accordion -->
+    </div><!-- #algorithm_panel -->
 
-    <div id="play_panel" class="control_panel">
-      <!--<div id="speed_slider"></div>-->
-      <button id="start_button">Start Search</button>
-      <button id="stop_button">Stop Search</button>
-      <button id="reset_button">Clear Walls</button>
+    <div id="play_panel" class="panel right_panel">
+      <button id="button1" class="control_button">Start Search</button>
+      <button id="button2" class="control_button">Pause Search</button>
+      <button id="button3" class="control_button">Clear Walls</button>
     </div>
 
     <div id="stats"></div>

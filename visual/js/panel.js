@@ -1,55 +1,29 @@
-window.Panel = {
+/**
+ * The control panel.
+ */
+var Panel = {
     init: function() {
-        this.initGeometry();
-        this.initListeners();
-    },
+        var $algo = $('#algorithm_panel');
 
-    initGeometry: function() {
-        $('.control_panel').draggable().show();
+        $('.panel').draggable();
         $('.accordion').accordion({
             collapsible: false,
         });
-        //$('#speed_slider').slider();
-
-        this.updateGeometry();
-    },
-
-    initListeners: function() {
-        var self = this, finder, interval;
-
-        $(window).resize(function() {
-            self.updateGeometry();
-        });
-
-        $('#start_button').click(function() {
-            if (GridController.isRunning()) {
-                return;
-            }
-            GridController.resetCurrent();
-            finder = self.getFinder();
-            interval = 3;
-            GridController.start(finder, interval, function() {
-                self.showStat();
-            });
-        });
-        $('#stop_button').click(function() {
-            GridController.stop();
-        });
-        $('#reset_button').click(function() {
-            GridController.resetAll();
-        });
-
-        $('#hide_instruction').click(function() {
-            $('#help_panel').slideUp();
-        });
-
         $('.option_label').click(function() {
             $(this).prev().click();
         });
+        $('#hide_instructions').click(function() {
+            $('#instructions_panel').slideUp();
+        });
+        $('#play_panel').css({
+            top: $algo.offset().top + $algo.outerHeight() + 20
+        });
+        $('#button2').attr('disabled', 'disabled');
     },
-
-
-    // XXX: clean up this messy code
+    /**
+     * Get the user selected path-finder.
+     * TODO: clean up this messy code.
+     */
     getFinder: function() {
         var finder, selected_header, heuristic, allowDiagonal, biDirectional;
         
@@ -132,22 +106,5 @@ window.Panel = {
         }
 
         return finder;
-    },
-
-
-    updateGeometry: function() {
-        (function($ele) {
-            $ele.css('top', $(window).height() - $ele.outerHeight() - 40 + 'px');
-        })($('#play_panel'));
-    },
-
-    showStat: function() {
-        var texts = [
-            'time: ' + GridController.getTimeSpent() + 'ms',
-            'length: ' + GridController.getPathLength(),
-            'operations: ' + GridController.getOperationCount()
-        ];
-        $('#stats').show().html(texts.join('<br>'));
-    },
-
+    }
 };
